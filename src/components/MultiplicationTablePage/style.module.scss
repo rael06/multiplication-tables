@@ -1,0 +1,13 @@
+.MultiplicationTablePage {
+  display: flex;
+  flex-direction: column;
+
+  .tablesSelector {
+    max-width: 80%;
+    margin-bottom: 10px;
+    align-self: center;
+  }
+  .startButton {
+    align-self: center;
+  }
+}
