@@ -11,8 +11,9 @@
     cursor: inherit;
   }
 
-  label {
+  span {
     margin-right: 2px;
+    user-select: none;
   }
 }
 

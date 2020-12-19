@@ -4,16 +4,25 @@ import TablesSelector from "components/TablesSelector";
 import Button from "common/Button";
 
 export default function MultiplicationTablePage() {
-  const [started, setStarted] = React.useState(false);
+  const [started, setStarted] = React.useState<boolean>(false);
+
+  const start = () => setStarted(true);
+  const stop = () => setStarted(false);
 
   return (
     <div className={styles.MultiplicationTablePage}>
       <div className={styles.tablesSelector}>
         <TablesSelector />
       </div>
-      <div className={styles.startButton}>
-        <Button>Commencer</Button>
-      </div>
+      {!started ? (
+        <div className={styles.startStopButton}>
+          <Button onClick={start}>Commencer</Button>
+        </div>
+      ) : (
+        <div className={styles.startStopButton}>
+          <Button onClick={stop}>Arrêter</Button>
+        </div>
+      )}
     </div>
   );
 }
