@@ -3,10 +3,12 @@
 .TablesSelector {
   display: flex;
   flex-wrap: wrap;
+  padding: 0 10px;
 
   .table {
-    flex: 1 1 calc(25% - 5px);
-    margin-bottom: 10px;
+    width: calc(1 / 4 * 100% - 10px);
+    margin: 0 auto 10px auto;
+    justify-content: center;
   }
 
   .table:nth-last-of-type(-n + 4) {
