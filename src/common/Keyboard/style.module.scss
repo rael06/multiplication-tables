@@ -1,0 +1,23 @@
+@import "global.module.scss";
+
+.Keyboard {
+  display: flex;
+  flex-wrap: wrap;
+
+  .key {
+    flex: 1 1 33%;
+    justify-content: center;
+  }
+
+  .ok {
+    background: $mainActionBackground;
+
+    :first-child {
+      background: inherit;
+    }
+
+    :first-child:hover {
+      background: $mainHoveredBackground;
+    }
+  }
+}

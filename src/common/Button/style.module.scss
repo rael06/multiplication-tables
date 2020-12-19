@@ -2,8 +2,10 @@
 
 .Button {
   display: flex;
+  justify-content: center;
   border-radius: $radius;
   padding: 5px 10px;
+  background: $actionBackground;
   cursor: pointer;
 }
 

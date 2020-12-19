@@ -5,7 +5,7 @@
   flex-wrap: wrap;
 
   .table {
-    flex: 1 1 25%;
+    flex: 1 1 calc(25% - 5px);
     margin-bottom: 10px;
   }
 
