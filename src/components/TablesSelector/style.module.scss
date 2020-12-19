@@ -2,5 +2,14 @@
 
 .TablesSelector {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+
+  .table {
+    flex: 1 1 25%;
+    margin-bottom: 10px;
+  }
+
+  .table:nth-last-of-type(-n + 4) {
+    margin-bottom: 0;
+  }
 }

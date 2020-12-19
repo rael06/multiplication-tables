@@ -1,0 +1,21 @@
+@import "global.module.scss";
+
+.Checkbox {
+  display: flex;
+  justify-content: center;
+  padding: 5px 10px;
+  border-radius: $radius;
+  cursor: pointer;
+
+  * {
+    cursor: inherit;
+  }
+
+  label {
+    margin-right: 2px;
+  }
+}
+
+.Checkbox:hover {
+  background: $hoveredBackground;
+}

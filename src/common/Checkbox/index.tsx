@@ -28,7 +28,7 @@ export default function Checkbox({
   return (
     <div className={styles.Checkbox} onClick={handleClick}>
       <label htmlFor={id}>{labelText}</label>
-      <input type="checkbox" id={id} defaultChecked={checked} />
+      <input type="checkbox" id={id} checked={checked} onChange={() => {}} />
     </div>
   );
 }

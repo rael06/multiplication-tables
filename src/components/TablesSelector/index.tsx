@@ -3,7 +3,7 @@ import styles from "./style.module.scss";
 import Checkbox from "common/Checkbox";
 
 const minTable = 2;
-const maxTable = 10;
+const maxTable = 9;
 
 const tables: number[] = [];
 for (let i = minTable; i < maxTable + 1; i++) {
@@ -20,19 +20,18 @@ export default function TablesSelector() {
       : setCheckedTables([...checkedTables, table as number]);
   };
 
-  console.log(checkedTables);
-
   return (
     <div className={styles.TablesSelector}>
       {tables.map((table) => (
-        <Checkbox
-          key={table.toString()}
-          labelIdPrefix="table"
-          labelText={table.toString()}
-          value={table}
-          onCheck={updateCheckedTables}
-          initialChecked={isChecked(table)}
-        />
+        <div className={styles.table} key={table.toString()}>
+          <Checkbox
+            labelIdPrefix="table"
+            labelText={table.toString()}
+            value={table}
+            onCheck={updateCheckedTables}
+            initialChecked={isChecked(table)}
+          />
+        </div>
       ))}
     </div>
   );

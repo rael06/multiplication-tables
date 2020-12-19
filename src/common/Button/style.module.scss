@@ -1,0 +1,12 @@
+@import "global.module.scss";
+
+.Button {
+  display: flex;
+  border-radius: $radius;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.Button:hover {
+  background: $hoveredBackground;
+}
