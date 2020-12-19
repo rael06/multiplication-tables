@@ -1,0 +1,9 @@
+@import "global.module.scss";
+
+.App {
+  background-color: $background;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: $textColor;
+}
