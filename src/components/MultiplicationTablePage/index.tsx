@@ -46,6 +46,7 @@ export default function MultiplicationTablePage() {
           answer={pressedKeys}
           checkedTables={checkedTables}
           started={started}
+          resetAnswer={updatePressedKeys}
         />
       </div>
 
