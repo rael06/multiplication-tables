@@ -7,6 +7,10 @@
   padding: 5px 10px;
   background: $actionBackground;
   cursor: pointer;
+
+  * {
+    user-select: none;
+  }
 }
 
 .Button:hover {
@@ -15,4 +19,8 @@
 
 .Button.disabled {
   background: $actionDisabledBackground;
+}
+
+* {
+  user-select: none;
 }
