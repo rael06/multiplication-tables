@@ -7,14 +7,14 @@ import Question from "./Question";
 
 export default function MultiplicationTablePage() {
   const [checkedTables, setCheckedTables] = React.useState<number[]>([]);
-  const [started, setStarted] = React.useState<boolean>(false);
+  const [isStarted, setIsStarted] = React.useState<boolean>(false);
   const [pressedKeys, setPressedKeys] = React.useState<string>("");
 
-  const start = () => setStarted(true);
-  const stop = () => setStarted(false);
+  const start = () => setIsStarted(true);
+  const stop = () => setIsStarted(false);
 
   const updateCheckedTables = (checkedTables: number[]) => {
-    if (!started) setCheckedTables(checkedTables);
+    if (!isStarted) setCheckedTables(checkedTables);
   };
 
   const updatePressedKeys = (pressedKeys: string) =>
@@ -25,13 +25,13 @@ export default function MultiplicationTablePage() {
       <div className={styles.tablesSelector}>
         <TablesSelector
           putCheckedTables={updateCheckedTables}
-          started={started}
+          isStarted={isStarted}
         />
       </div>
 
-      {!started ? (
+      {!isStarted ? (
         <div className={styles.startStopButton}>
-          <Button onClick={start} disabled={checkedTables.length === 0}>
+          <Button onClick={start} isDisabled={checkedTables.length === 0}>
             Commencer
           </Button>
         </div>
@@ -45,7 +45,7 @@ export default function MultiplicationTablePage() {
         <Question
           answer={pressedKeys}
           checkedTables={checkedTables}
-          started={started}
+          isStarted={isStarted}
           resetAnswer={updatePressedKeys}
         />
       </div>
@@ -54,7 +54,7 @@ export default function MultiplicationTablePage() {
         <Keyboard
           keys={["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]}
           onConfirm={updatePressedKeys}
-          disabled={!started}
+          isDisabled={!isStarted}
         />
       </div>
     </div>

@@ -7,7 +7,7 @@ type Props = {
   value: unknown;
   initialChecked?: boolean;
   onCheck: (value: unknown) => void;
-  disabled?: boolean;
+  isDisabled?: boolean;
 };
 
 export default function Checkbox({
@@ -16,7 +16,7 @@ export default function Checkbox({
   initialChecked = false,
   value,
   onCheck,
-  disabled = false,
+  isDisabled = false,
 }: Props) {
   const [checked, setChecked] = React.useState(initialChecked);
 
@@ -29,9 +29,9 @@ export default function Checkbox({
 
   return (
     <div
-      className={`${styles.Checkbox} ${disabled ? styles.disabled : ""}`}
+      className={`${styles.Checkbox} ${isDisabled ? styles.disabled : ""}`}
       onClick={() => {
-        if (!disabled) handleClick();
+        if (!isDisabled) handleClick();
       }}
     >
       <span>{labelText}</span>

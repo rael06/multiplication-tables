@@ -6,10 +6,14 @@ import TextView from "common/TextView";
 type Props = {
   keys: string[];
   onConfirm: (pressedKeys: string) => void;
-  disabled?: boolean;
+  isDisabled?: boolean;
 };
 
-export default function Keyboard({ keys, onConfirm, disabled = false }: Props) {
+export default function Keyboard({
+  keys,
+  onConfirm,
+  isDisabled = false,
+}: Props) {
   const [pressedKeys, setPressedKeys] = React.useState<string>("");
 
   const addPressedKey = (value: unknown) =>
@@ -35,7 +39,7 @@ export default function Keyboard({ keys, onConfirm, disabled = false }: Props) {
             <Button
               onClick={(key) => addPressedKey(key)}
               value={key}
-              disabled={disabled}
+              isDisabled={isDisabled}
             >
               {key}
             </Button>
@@ -43,13 +47,13 @@ export default function Keyboard({ keys, onConfirm, disabled = false }: Props) {
         ))}
 
         <div className={styles.key}>
-          <Button onClick={deleteLastPressedKey} disabled={disabled}>
+          <Button onClick={deleteLastPressedKey} isDisabled={isDisabled}>
             {"<-"}
           </Button>
         </div>
 
-        <div className={`${styles.key} ${disabled ? "" : styles.ok}`}>
-          <Button onClick={confirm} disabled={disabled}>
+        <div className={`${styles.key} ${isDisabled ? "" : styles.ok}`}>
+          <Button onClick={confirm} isDisabled={isDisabled}>
             Ok
           </Button>
         </div>

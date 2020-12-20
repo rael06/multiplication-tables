@@ -8,20 +8,20 @@ const maxMultiplicator = 10;
 type Props = {
   answer: string;
   checkedTables: number[];
-  started: boolean;
+  isStarted: boolean;
   resetAnswer: (pressedKeys: string) => void;
 };
 
 export default function Question({
   answer,
   checkedTables,
-  started,
+  isStarted,
   resetAnswer,
 }: Props) {
   const leftNumber = React.useRef<number>(0);
   const rightNumber = React.useRef<number>(0);
   const [text, setText] = React.useState<string>("");
-  const [correct, setCorrect] = React.useState<boolean>();
+  const [isCorrect, setIsCorrectAnswer] = React.useState<boolean>();
 
   const randomMultiplicator = (): number =>
     Math.floor(Math.random() * maxMultiplicator) + minMultiplicator;
@@ -34,29 +34,24 @@ export default function Question({
       return Number(checkedTables[randomIndex]);
     };
 
-    console.log("rightNumber.current", rightNumber.current);
-
     if (answer === "") {
       if (!leftNumber.current) leftNumber.current = randomTable();
       if (!rightNumber.current) rightNumber.current = randomMultiplicator();
       setText(newQuestion);
-      console.log("answer === ''", answer);
     } else {
       const result = leftNumber.current * rightNumber.current;
-      console.log(
-        "answer === number",
-        answer,
-        result,
-        Number(answer) === result
-      );
-      Number(answer) === result ? setCorrect(true) : setCorrect(false);
+      const newIsCorrectAnswer = Number(answer) === result;
+      setIsCorrectAnswer(newIsCorrectAnswer);
       setText(`${text} = ${String(result)}`);
-      setTimeout(() => {
-        leftNumber.current = 0;
-        rightNumber.current = 0;
-        resetAnswer("");
-        setCorrect(undefined);
-      }, 3000);
+      setTimeout(
+        () => {
+          leftNumber.current = 0;
+          rightNumber.current = 0;
+          resetAnswer("");
+          setIsCorrectAnswer(undefined);
+        },
+        newIsCorrectAnswer ? 1500 : 4000
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [answer, checkedTables, newQuestion, resetAnswer]);
@@ -64,11 +59,13 @@ export default function Question({
   return (
     <div
       className={`${styles.Question} ${
-        correct === undefined ? "" : correct ? styles.correct : styles.wrong
+        isCorrect === undefined ? "" : isCorrect ? styles.correct : styles.wrong
       }`}
     >
       <TextView
-        text={started && !text.match(/NaN/i) && !text.match(/^0.*/) ? text : ""}
+        text={
+          isStarted && !text.match(/NaN/i) && !text.match(/^0.*/) ? text : ""
+        }
       />
     </div>
   );

@@ -12,10 +12,10 @@ for (let i = minTable; i < maxTable + 1; i++) {
 
 type Props = {
   putCheckedTables: (checkedTables: number[]) => void;
-  started: boolean;
+  isStarted: boolean;
 };
 
-export default function TablesSelector({ putCheckedTables, started }: Props) {
+export default function TablesSelector({ putCheckedTables, isStarted }: Props) {
   const [checkedTables, setCheckedTables] = React.useState<number[]>([]);
 
   const isChecked = (table: number) => checkedTables.includes(table);
@@ -45,7 +45,7 @@ export default function TablesSelector({ putCheckedTables, started }: Props) {
       {tables.map((table) => (
         <div className={styles.table} key={table.toString()}>
           <Checkbox
-            disabled={started}
+            isDisabled={isStarted}
             labelIdPrefix="table"
             labelText={table.toString()}
             value={table}
