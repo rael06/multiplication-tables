@@ -2,28 +2,42 @@
 
 .Keyboard {
   display: flex;
-  flex-wrap: wrap;
-  padding: 0 10px;
+  flex-direction: column;
+  align-items: center;
 
-  .key {
-    width: calc(1 / 3 * 100% - 10px);
-    margin: 0 auto 10px auto;
-    justify-content: center;
+  .pressedKeysTextView {
+    width: 70%;
+    height: 20px;
+    margin-bottom: 10px;
+    padding: 5px 10px;
   }
 
-  .key:nth-last-of-type(-n + 3) {
-    margin-bottom: 0;
-  }
+  .keys {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 10px;
 
-  .ok {
-    background: $mainActionBackground;
-
-    :first-child {
-      background: inherit;
+    .key {
+      width: calc(1 / 3 * 100% - 10px);
+      margin: 0 auto 10px auto;
+      justify-content: center;
     }
 
-    :first-child:hover {
-      background: $mainHoveredBackground;
+    .key:nth-last-of-type(-n + 3) {
+      margin-bottom: 0;
+    }
+
+    .ok {
+      border-radius: $radius;
+      background: $mainActionBackground;
+
+      :first-child {
+        background: inherit;
+      }
+
+      :first-child:hover {
+        background: $mainHoveredBackground;
+      }
     }
   }
 }

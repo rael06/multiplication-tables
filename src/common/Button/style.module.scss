@@ -12,3 +12,7 @@
 .Button:hover {
   background: $hoveredBackground;
 }
+
+.Button.disabled {
+  background: $actionDisabledBackground;
+}

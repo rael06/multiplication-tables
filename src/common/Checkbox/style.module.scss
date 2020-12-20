@@ -21,3 +21,7 @@
 .Checkbox:hover {
   background: $hoveredBackground;
 }
+
+.Checkbox.disabled {
+  background: $actionDisabledBackground;
+}
