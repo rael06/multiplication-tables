@@ -43,7 +43,7 @@ export default function TablesSelector({ putCheckedTables, isStarted }: Props) {
   return (
     <div className={styles.TablesSelector}>
       {tables.map((table) => (
-        <div className={styles.table} key={table.toString()}>
+        <div className={styles.tableCheckbox} key={table.toString()}>
           <Checkbox
             isDisabled={isStarted}
             labelIdPrefix="table"

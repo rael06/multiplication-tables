@@ -1,10 +1,15 @@
 $textColor: white;
-$background: #282c34;
+$textColorContrast: #282c34;
+$background: linear-gradient(#fffb00, #00ff62);
 $textViewBackground: white;
-$textViewColor: black;
+$textViewColor: #282c34;
 $actionBackground: #45494e;
 $mainActionBackground: #1461be;
 $hoveredBackground: #5c6a7c;
 $mainHoveredBackground: #3a82da;
 $actionDisabledBackground: #382f2f;
 $radius: 3px;
+
+$tableCheckboxColor: rgb(236, 16, 53);
+$startStopButtonColor: rgb(31, 16, 236);
+$keyboardButtonColor: rgb(236, 16, 53);
