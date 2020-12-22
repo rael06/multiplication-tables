@@ -30,7 +30,7 @@ export default function Keyboard({
   return (
     <div className={styles.Keyboard}>
       <div className={styles.pressedKeysTextView}>
-        <TextView text={pressedKeys} />
+        <TextView text={isDisabled ? "" : pressedKeys} />
       </div>
 
       <div className={styles.keys}>

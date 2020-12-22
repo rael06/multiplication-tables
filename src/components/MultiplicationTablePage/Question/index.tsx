@@ -26,6 +26,8 @@ export default function Question({
   };
 
   const [text, setText] = React.useState<string>("");
+  const numberOfAnswers = React.useRef<number>(0);
+  const numberOfCorrectAnswers = React.useRef<number>(0);
 
   const leftNumber = React.useRef<number>(0);
   const rightNumber = React.useRef<number>(0);
@@ -37,16 +39,37 @@ export default function Question({
   const randomMultiplicator = (): number =>
     Math.floor(Math.random() * maxMultiplicator) + minMultiplicator;
 
+  const randomTable = (): number => {
+    const randomIndex = Math.floor(Math.random() * checkedTables.length);
+    return Number(checkedTables[randomIndex]);
+  };
+
   React.useEffect(() => {
-    const randomTable = (): number => {
-      const randomIndex = Math.floor(Math.random() * checkedTables.length);
-      return Number(checkedTables[randomIndex]);
-    };
+    if (appStatus === "idle") {
+      numberOfCorrectAnswers.current = 0;
+      numberOfAnswers.current = 0;
+      answerStatus.current = "idle";
+    }
+
+    if (appStatus === "stopped") {
+      if (numberOfAnswers.current > 0) {
+        answerStatus.current =
+          numberOfCorrectAnswers.current >= numberOfAnswers.current * 0.8
+            ? "correct"
+            : "wrong";
+        setText(
+          `Ta note est : ${numberOfCorrectAnswers.current} sur ${numberOfAnswers.current}`
+        );
+      } else {
+        setText("");
+      }
+    }
 
     if (status === "answered") {
-      console.log("compare");
       const result = leftNumber.current * rightNumber.current;
       answerStatus.current = Number(answer) === result ? "correct" : "wrong";
+      if (answerStatus.current === "correct") numberOfCorrectAnswers.current++;
+      numberOfAnswers.current++;
       setText(`${text} = ${String(result)}`);
       setTimeout(
         () => {
@@ -57,14 +80,14 @@ export default function Question({
         },
         answerStatus.current === "correct" ? 1500 : 4000
       );
-    } else {
+    } else if (status === "notAnswered") {
       leftNumber.current = randomTable();
       rightNumber.current = randomMultiplicator();
       newQuestion.current = `${leftNumber.current} x ${rightNumber.current}`;
       setText(newQuestion.current);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [answer, checkedTables, resetAnswer]);
+  }, [answer, resetAnswer]);
 
   return (
     <div
@@ -76,7 +99,7 @@ export default function Question({
           : styles.wrong
       }`}
     >
-      <TextView text={appStatus === "started" ? text : ""} />
+      <TextView text={appStatus !== "idle" ? text : ""} />
     </div>
   );
 }

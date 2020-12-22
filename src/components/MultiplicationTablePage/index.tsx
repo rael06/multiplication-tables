@@ -30,7 +30,13 @@ export default function MultiplicationTablePage() {
       {appStatus !== "started" ? (
         <div className={styles.startStopButton}>
           <Button
-            onClick={() => setAppStatus("started")}
+            onClick={() => {
+              setAppStatus("idle");
+              //to separate render that reset
+              setTimeout(() => {
+                setAppStatus("started");
+              }, 0);
+            }}
             isDisabled={checkedTables.length === 0}
           >
             Commencer
