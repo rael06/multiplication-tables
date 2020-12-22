@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./style.module.scss";
 import TextView from "common/TextView";
 import { AppStatus } from "../types/types";
+import { AnswerStatus, QuestionStatus } from "./types";
 
 const minMultiplicator = 1;
 const maxMultiplicator = 10;
@@ -19,15 +20,22 @@ export default function Question({
   appStatus,
   resetAnswer,
 }: Props) {
+  const getStatus = (): QuestionStatus => {
+    if (appStatus === "started") return answer ? "answered" : "notAnswered";
+    return "idle";
+  };
+
+  const [text, setText] = React.useState<string>("");
+
   const leftNumber = React.useRef<number>(0);
   const rightNumber = React.useRef<number>(0);
-  const [text, setText] = React.useState<string>("");
-  const [isCorrectAnswer, setIsCorrectAnswer] = React.useState<boolean>();
+  const newQuestion = React.useRef<string>("");
+  const answerStatus = React.useRef<AnswerStatus>("idle");
+
+  const status = getStatus();
 
   const randomMultiplicator = (): number =>
     Math.floor(Math.random() * maxMultiplicator) + minMultiplicator;
-
-  const newQuestion = `${leftNumber.current} x ${rightNumber.current}`;
 
   React.useEffect(() => {
     const randomTable = (): number => {
@@ -35,45 +43,40 @@ export default function Question({
       return Number(checkedTables[randomIndex]);
     };
 
-    if (answer === "") {
-      if (!leftNumber.current) leftNumber.current = randomTable();
-      if (!rightNumber.current) rightNumber.current = randomMultiplicator();
-      setText(newQuestion);
-    } else {
+    if (status === "answered") {
+      console.log("compare");
       const result = leftNumber.current * rightNumber.current;
-      const newIsCorrectAnswer = Number(answer) === result;
-      setIsCorrectAnswer(newIsCorrectAnswer);
+      answerStatus.current = Number(answer) === result ? "correct" : "wrong";
       setText(`${text} = ${String(result)}`);
       setTimeout(
         () => {
           leftNumber.current = 0;
           rightNumber.current = 0;
+          answerStatus.current = "idle";
           resetAnswer("");
-          setIsCorrectAnswer(undefined);
         },
-        newIsCorrectAnswer ? 1500 : 4000
+        answerStatus.current === "correct" ? 1500 : 4000
       );
+    } else {
+      leftNumber.current = randomTable();
+      rightNumber.current = randomMultiplicator();
+      newQuestion.current = `${leftNumber.current} x ${rightNumber.current}`;
+      setText(newQuestion.current);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [answer, checkedTables, newQuestion, resetAnswer]);
+  }, [answer, checkedTables, resetAnswer]);
 
   return (
     <div
       className={`${styles.Question} ${
-        isCorrectAnswer === undefined
+        answerStatus.current === "idle"
           ? ""
-          : isCorrectAnswer
+          : answerStatus.current === "correct"
           ? styles.correct
           : styles.wrong
       }`}
     >
-      <TextView
-        text={
-          appStatus === "started" && !text.match(/NaN/i) && !text.match(/^0.*/)
-            ? text
-            : ""
-        }
-      />
+      <TextView text={appStatus === "started" ? text : ""} />
     </div>
   );
 }
