@@ -16,8 +16,10 @@ export default function Keyboard({
 }: Props) {
   const [pressedKeys, setPressedKeys] = React.useState<string>("");
 
-  const addPressedKey = (value: unknown) =>
-    setPressedKeys(pressedKeys + (value as string));
+  const addPressedKey = (value: unknown) => {
+    if (pressedKeys.length < 10)
+      setPressedKeys(pressedKeys + (value as string));
+  };
 
   const deleteLastPressedKey = () =>
     setPressedKeys(pressedKeys.substring(0, pressedKeys.length - 1));
