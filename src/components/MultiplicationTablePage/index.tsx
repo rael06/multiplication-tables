@@ -4,17 +4,15 @@ import TablesSelector from "./TablesSelector";
 import Button from "common/Button";
 import Keyboard from "common/Keyboard";
 import Question from "./Question";
+import { AppStatus } from "./types/types";
 
 export default function MultiplicationTablePage() {
   const [checkedTables, setCheckedTables] = React.useState<number[]>([]);
-  const [isStarted, setIsStarted] = React.useState<boolean>(false);
   const [pressedKeys, setPressedKeys] = React.useState<string>("");
-
-  const start = () => setIsStarted(true);
-  const stop = () => setIsStarted(false);
+  const [appStatus, setAppStatus] = React.useState<AppStatus>("idle");
 
   const updateCheckedTables = (checkedTables: number[]) => {
-    if (!isStarted) setCheckedTables(checkedTables);
+    if (appStatus !== "started") setCheckedTables(checkedTables);
   };
 
   const updatePressedKeys = (pressedKeys: string) =>
@@ -25,19 +23,22 @@ export default function MultiplicationTablePage() {
       <div className={styles.tablesSelector}>
         <TablesSelector
           putCheckedTables={updateCheckedTables}
-          isStarted={isStarted}
+          isStarted={appStatus === "started"}
         />
       </div>
 
-      {!isStarted ? (
+      {appStatus !== "started" ? (
         <div className={styles.startStopButton}>
-          <Button onClick={start} isDisabled={checkedTables.length === 0}>
+          <Button
+            onClick={() => setAppStatus("started")}
+            isDisabled={checkedTables.length === 0}
+          >
             Commencer
           </Button>
         </div>
       ) : (
         <div className={styles.startStopButton}>
-          <Button onClick={stop}>Arrêter</Button>
+          <Button onClick={() => setAppStatus("stopped")}>Arrêter</Button>
         </div>
       )}
 
@@ -45,7 +46,7 @@ export default function MultiplicationTablePage() {
         <Question
           answer={pressedKeys}
           checkedTables={checkedTables}
-          isStarted={isStarted}
+          appStatus={appStatus}
           resetAnswer={updatePressedKeys}
         />
       </div>
@@ -54,7 +55,7 @@ export default function MultiplicationTablePage() {
         <Keyboard
           keys={["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]}
           onConfirm={updatePressedKeys}
-          isDisabled={!isStarted}
+          isDisabled={appStatus !== "started"}
         />
       </div>
     </div>

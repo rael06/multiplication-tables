@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./style.module.scss";
 import TextView from "common/TextView";
+import { AppStatus } from "../types/types";
 
 const minMultiplicator = 1;
 const maxMultiplicator = 10;
@@ -8,20 +9,20 @@ const maxMultiplicator = 10;
 type Props = {
   answer: string;
   checkedTables: number[];
-  isStarted: boolean;
+  appStatus: AppStatus;
   resetAnswer: (pressedKeys: string) => void;
 };
 
 export default function Question({
   answer,
   checkedTables,
-  isStarted,
+  appStatus,
   resetAnswer,
 }: Props) {
   const leftNumber = React.useRef<number>(0);
   const rightNumber = React.useRef<number>(0);
   const [text, setText] = React.useState<string>("");
-  const [isCorrect, setIsCorrectAnswer] = React.useState<boolean>();
+  const [isCorrectAnswer, setIsCorrectAnswer] = React.useState<boolean>();
 
   const randomMultiplicator = (): number =>
     Math.floor(Math.random() * maxMultiplicator) + minMultiplicator;
@@ -59,12 +60,18 @@ export default function Question({
   return (
     <div
       className={`${styles.Question} ${
-        isCorrect === undefined ? "" : isCorrect ? styles.correct : styles.wrong
+        isCorrectAnswer === undefined
+          ? ""
+          : isCorrectAnswer
+          ? styles.correct
+          : styles.wrong
       }`}
     >
       <TextView
         text={
-          isStarted && !text.match(/NaN/i) && !text.match(/^0.*/) ? text : ""
+          appStatus === "started" && !text.match(/NaN/i) && !text.match(/^0.*/)
+            ? text
+            : ""
         }
       />
     </div>
