@@ -7,11 +7,15 @@
 
   .table {
     width: calc(1 / 4 * 100% - 20px);
-    margin: 0 auto 20px auto;
+    margin: 0 20px 20px auto;
     justify-content: center;
   }
 
   .table:nth-last-of-type(-n + 4) {
     margin-bottom: 0;
+  }
+
+  .table:nth-of-type(4n) {
+    margin-right: 0;
   }
 }
