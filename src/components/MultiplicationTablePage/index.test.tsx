@@ -7,6 +7,5 @@ describe("<MultiplicationTablePage />", () => {
   it("Should display Stop button when click on Start button", () => {
     render(<MultiplicationTablePage />);
     userEvent.click(screen.getByText("Commencer"));
-    screen.debug();
   });
 });
